@@ -173,12 +173,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
-    <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Delete.cshtml" />
-    <Content Include="Views\Student\EditPost.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Why_SIT\Index.cshtml" />
     <Content Include="Views\Research\Index.cshtml" />
+    <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
