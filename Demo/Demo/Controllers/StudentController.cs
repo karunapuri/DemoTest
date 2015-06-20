@@ -7,6 +7,7 @@ using System.Data;
 using System.Web.Mvc;
 using Demo.DAL;
 using Demo.Models;
+using System.Data.Entity;
 
 namespace Demo.Controllers
 {
@@ -70,7 +71,7 @@ namespace Demo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost(int? id)
+        /*public ActionResult EditPost(int? id)
         {
             if (id == null)
             {
@@ -86,14 +87,43 @@ namespace Demo.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (DataException /* dex */)
+                catch (DataException )
                 {
                     //Log the error (uncomment dex variable name and add a line here to write a log.
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
             return View(studentToUpdate);
+        }*/
+        public ActionResult Edit([Bind(Include = "LastName,FirstMidName,EnrollmentDate")] Student student,int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Student studentToUpdate = db.Students.Find(id);
+            var studentToUpdate = db.Students.Find(id);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    db.Entry(studentToUpdate).State = EntityState.Modified;
+                    //db.Students.Add(student);
+                    UpdateModel(studentToUpdate);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+            
+            return View(studentToUpdate);
         }
+
 
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {

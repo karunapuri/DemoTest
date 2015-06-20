@@ -1,10 +1,33 @@
-﻿
-@{
-    ViewBag.Title = "List of Courses";
+﻿@model IEnumerable<Demo.Models.Course>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Credits)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Credits)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseID })
+        </td>
+    </tr>
 }
-<h2>@ViewBag.Title</h2>
 
-
-<p>The Institute provides on environment conducive for harnessing the potential of both faculty and students through systematic and effective planning and control of the teaching learning process, both within and outside the classroom. The basic teaching learning process is supplemented by organizing techfests, cultural programmes, sports competitions, industry-institute meets, guest lectures by renowned personalities and student exchange programmes with foreign universities.</p>
-<p>For details check Course Catalog.</p>
-<p><a class="btn-link" href="http://sitpune.edu.in/pdf/Course-Catalog-2014.pdf"> Course Catalog &raquo;</a></p>
+</table>
