@@ -1,24 +1,5 @@
-﻿/*using System;
-using System.Collections.Generic;
+﻿
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace Demo.Controllers
-{
-    public class CourseController : Controller
-    {
-        // GET: Course
-        public ActionResult Index()
-        {
-            return View();
-        }
-    }
-}*/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Net;
 using System.Data;
 using System.Web.Mvc;
@@ -51,20 +32,28 @@ namespace Demo.Controllers
             return View(course);
         }
 
-
-
-        public ActionResult Create([Bind(Include = "Title, Credits")]Course course)
+        public ActionResult Create()
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Course course)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    db.Courses.Add(course);
+                    //db.Entry(course).State = EntityState.Modified;
+
+                   db.Courses.Add(course);
+                    //UpdateModel(course);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-            catch (DataException /* dex */)
+            catch (DataException )
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
@@ -88,30 +77,6 @@ namespace Demo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        /*public ActionResult EditPost(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var studentToUpdate = db.Students.Find(id);
-            if (TryUpdateModel(studentToUpdate, "",
-               new string[] { "LastName", "FirstMidName", "EnrollmentDate" }))
-            {
-                try
-                {
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
-                }
-                catch (DataException )
-                {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
-            }
-            return View(studentToUpdate);
-        }*/
         public ActionResult Edit([Bind(Include = "Title,Credits")] Course course, int? id)
         {
             if (id == null)
@@ -126,7 +91,6 @@ namespace Demo.Controllers
                 {
 
                     db.Entry(courseToUpdate).State = EntityState.Modified;
-                    //db.Students.Add(student);
                     UpdateModel(courseToUpdate);
                     db.SaveChanges();
                     return RedirectToAction("Index");

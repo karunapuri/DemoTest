@@ -34,8 +34,14 @@ namespace Demo.Controllers
             return View(student);
         }
 
-        
-      
+
+        public ActionResult Create()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "LastName, FirstMidName, EnrollmentDate")]Student student)
         {
             try
