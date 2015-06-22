@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Http;
+
+
 
 namespace Demo
 {
@@ -12,10 +15,19 @@ namespace Demo
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            /*var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling =
+                Newtonsoft.Json.PreserveReferencesHandling.All;*/
+
+            /*var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+json.SerializerSettings.PreserveReferencesHandling = 
+    Newtonsoft.Json.PreserveReferencesHandling.None;*/
         }
     }
 }
