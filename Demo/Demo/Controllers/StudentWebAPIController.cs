@@ -23,16 +23,24 @@ namespace Demo.Controllers
 
         // GET: api/StudentWebAPI/5
         [ResponseType(typeof(Student))]
-        public IHttpActionResult GetStudent(int id)
+        public HttpResponseMessage GetStudent(int id)
         {
             Student student = db.Students.Find(id);
-
-            if (student == null)
+            //Employee emp = EmployeeContext.Employees.Where(e => e.Id == id).FirstOrDefault();
+            if (student != null)
             {
-                return NotFound();
+                return Request.CreateResponse<Student>(HttpStatusCode.OK, student);
             }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, " Student Not Found");
+            }
+            /*            if (student == null)
+                        {
+                            return NotFound();
+                        }
 
-            return Ok(student);
+                        return Ok(student);*/
         }
 
         // PUT: api/StudentWebAPI/5
